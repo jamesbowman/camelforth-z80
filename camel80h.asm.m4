@@ -45,7 +45,7 @@
 ;  HEX 82 CONSTANT TIB   CP/M systems: 126 bytes
 ;  HEX -80 USER TIB      others: below user area
     head(TIB,TIB,docon)
-        dw 82h
+        dw $e000
 
 ;Z u0      -- a-addr       current user area adrs
 ;  0 USER U0
@@ -1001,7 +1001,6 @@ DOTS2:  DW EXIT
 ;   ABORT ;
     head(COLD,COLD,docolon)
         DW UINIT,U0,NINIT,CMOVE
-        DW lit,80h,COUNT,INTERPRET
         DW XSQUOTE
         DB 35,"Z80 CamelForth v1.01  25 Jan 1995"
         DB 0dh,0ah

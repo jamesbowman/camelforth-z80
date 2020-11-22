@@ -261,6 +261,7 @@ dodoes: ; -- a-addr
         ld a,l
         rst $30
         ld b,0
+        ld c,a
 
         pop de
         next
@@ -272,6 +273,7 @@ dodoes: ; -- a-addr
         ex_sp_de
         rst $30
         ld b,0
+        ld c,a
         pop de
         next
 
@@ -293,7 +295,7 @@ dodoes: ; -- a-addr
 ; must use CP/M direct console I/O to avoid echo
 ; (BDOS function 6, contained within KEY?)
     head(KEY,KEY,docolon)
-        DW lit,1,API1,EXIT
+        DW lit,0,lit,1,API1,EXIT
 
 dnl ;Z CPMACCEPT  c-addr +n -- +n'  get line of input
 dnl ;   SWAP 2 - TUCK C!      max # of characters
@@ -304,9 +306,9 @@ dnl ; to be available for use.
     head(CPMACCEPT,CPMACCEPT,docolon)
         DW lit,4,API2,EXIT
 
-dnl ;X BYE     i*x --    return to CP/M
-dnl     head(bye,bye,docode)
-dnl         jp 0
+;X BYE     i*x --    return to CP/M
+    head(BYE,BYE,docode)
+        jp 0
 
 ; STACK OPERATIONS ==============================
 
