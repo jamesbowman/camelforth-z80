@@ -11,6 +11,6 @@ rm -f a.*
 m4 camel80.asm.m4 >  camel80.asm
 z88dk-z80asm -mz80 -l camel80.asm
 
-zcc +rc2014 -v -subtype=cpm --no-crt -Ca '-l' -Cz '--org 0x9000' camel80.asm -create-app
-xclip -i a.ihx
+zcc +rc2014 -o camel80 -subtype=cpm --no-crt -Ca '-l' -Cz '--org 0x9000' camel80.asm -create-app
+xclip -i camel80.ihx
 # python scmload.py $HOME/rc2014 a.ihx
