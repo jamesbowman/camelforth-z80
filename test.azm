@@ -1,4 +1,0 @@
-          org $9000
-
-here:
-          jp here
