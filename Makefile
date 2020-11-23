@@ -1,4 +1,2 @@
-test.ihx: test.asm.m4 Makefile
-	zcc -Ca '-l -b' test.asm.m4
-	z88dk-appmake +hex --org 0x9000 -b test.bin
-	cat test.ihx
+camel80.ihx: *.asm.m4 Makefile
+	zcc +rc2014 -o camel80 -subtype=cpm --no-crt -Ca '-l' -Cz '--org 0x9000' camel80.asm -create-app
