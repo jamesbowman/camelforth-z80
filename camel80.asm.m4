@@ -87,8 +87,7 @@ define(nexthl, `
         ld d,(hl)
         inc hl
         ex de,hl
-        jp (hl)
-        ')
+        jp (hl)')
 
 ; The NEXT macro (7 bytes) assembles the 'next'
 ; code in-line in every Z80 CamelForth CODE word.
@@ -103,8 +102,6 @@ define(ex_sp_de, `
         ex de,hl')
 
 ; RESET AND INTERRUPT VECTORS ===================
-; ...are not used in the CP/M implementation
-; Instead, we have the...
 
 ; RC2014 Entry point
         org $9000
