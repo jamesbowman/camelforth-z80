@@ -6,7 +6,7 @@ def scmload(port, hexfile):
     with serial.Serial(port, 115200, timeout=.01) as ser:
         ser.read(99999)
         print('Opened port')
-        ser.write(b'.\r')
+        ser.write(b'BYE\r')
         while not b'*' in ser.read():
             pass
         print('Got prompt')
@@ -16,10 +16,10 @@ def scmload(port, hexfile):
             for c in d:
                 ser.write(bytes([c]))
         time.sleep(.1)
-        ser.write(b'G 8000\r')
+        ser.write(b'G 9000\r')
         ser.flush()
         print("[SENT]")
-        while True:
+        while 0:
             sys.stdout.write(ser.read(800).decode('utf-8'))
 
 if __name__ == "__main__":

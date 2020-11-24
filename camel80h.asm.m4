@@ -994,6 +994,74 @@ WDS1:   DW DUP,COUNT,TYPE,SPACE,NFATOLFA,FETCH
 DOTS1:  DW II,FETCH,UDOT,lit,-2,xplusloop,DOTS1
 DOTS2:  DW EXIT
 
+;C D.    d --           display d signed
+    head(DDOT,D.,docolon)
+        DW LESSNUM,DUP,TOR,DABS,NUMS
+        DW RFROM,SIGN,NUMGREATER,TYPE,SPACE,EXIT
+
+;X D+               d1 d2 -- d1+d2              Add double numbers
+    head(DPLUS,D+,docode)
+        exx
+        pop bc          ; BC'=d2lo
+        exx
+        pop hl          ; HL=d1hi,BC=d2hi
+        exx
+        pop hl          ; HL'=d1lo
+        add hl,bc
+        push hl         ; 2OS=d1lo+d2lo
+        exx
+        adc hl,bc       ; HL=d1hi+d2hi+cy
+        ld b,h
+        ld c,l
+        next
+
+;C 2>R   d --           2 to R
+    head(TWOTOR,2>R,docolon)
+        DW SWOP,RFROM,SWOP,TOR,SWOP,TOR,TOR,EXIT
+
+;C 2R>   d --           fetch 2 from R
+    head(TWORFROM,2R>,docolon)
+        DW RFROM,RFROM,RFROM,SWOP,ROT,TOR,EXIT
+
+TNEGATE:
+        call docolon
+        DW TOR,TWODUP,OR,DUP,qbranch,TNEG1,DROP,DNEGATE,lit,1
+TNEG1:
+        DW RFROM,PLUS,NEGATE,EXIT
+
+qtneg:
+        call docolon
+        DW ZEROLESS,qbranch,qtneg1,TNEGATE
+qtneg1:
+        DW EXIT
+
+TSTAR:
+        call docolon
+        DW TWODUP,XOR,TOR
+        DW TOR,DABS,RFROM,ABS
+        DW TWOTOR
+        DW RFETCH,UMSTAR,lit,0
+        DW TWORFROM,UMSTAR
+        DW DPLUS
+        DW RFROM
+        DW qtneg
+        DW EXIT
+
+TDIV:
+        call docolon
+        DW OVER,TOR,TOR
+        DW DUP,qtneg
+        DW RFETCH,UMSLASHMOD
+        DW ROT,ROT
+        DW RFROM,UMSLASHMOD
+        DW NIP,SWOP
+        DW RFROM,ZEROLESS,qbranch,tdiv1,DNEGATE
+tdiv1:
+        DW EXIT
+
+    head(MSTARSLASH,M*/,docolon)
+        DW TOR,TSTAR,RFROM,TDIV,EXIT
+
 ;Z COLD     --      cold start Forth system
 ;   UINIT U0 #INIT CMOVE      init user area
 ;   80 COUNT INTERPRET       interpret CP/M cmd
