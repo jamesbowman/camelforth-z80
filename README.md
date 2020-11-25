@@ -29,7 +29,7 @@ Then run it by jumping to address 8000:
 
 
 You're in! CamelForth is a 16-bit Forth, closely following the ANSI standard.
-You can used ``WORDS`` to see what's available in the system.
+You can use ``WORDS`` to see what's available in the system.
 The two CamelForth files
 ``glosshi.txt`` and ``glosslo.txt``
 contain a full list of the available words.
